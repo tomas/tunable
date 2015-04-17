@@ -105,7 +105,7 @@ Then:
   user.layout_color # => 'black'
 ```
 
-That's pretty much it. Fork away and send a PR.
+That's pretty much it. Fork away and send a PR, but please add tests for it.
 
 Boring stuff
 ------------
