@@ -28,9 +28,9 @@ Now we can do:
 
 You can also get a flat hash of your settings by calling the `settings_hash` method.
 
-``` r
-  user.settings_hash # => { :theme => { :layout => 'wide', :color => 'red' } }
 ``` rb
+  user.settings_hash # => { :theme => { :layout => 'wide', :color => 'red' } }
+```
 
 Tunable also lets you set defaults for your settings. Let's set up default notification settings for our Users. 
 
