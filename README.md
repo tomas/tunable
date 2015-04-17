@@ -13,7 +13,6 @@ class User < ActiveRecord::Base
   include Tunable::Model
 
   has_settings :notify => :activity, :new_messages, :weekly_report
-
 end
 ```
 
@@ -41,7 +40,6 @@ class User < ActiveRecord::Base
     new_messages:  { default: true },
     weekly_report: { default: true }
   }
-
 end
 ```
 
@@ -65,7 +63,6 @@ class User < ActiveRecord::Base
 
   # in this case we're not setting a default value for the :no_cookies setting
   main_settings :no_cookies, :language => { :default => 'en' }
-
 end
 ```
 
@@ -88,8 +85,9 @@ Now let's see what happens.
 You can also set a lambda to return the default setting for a model.
 
 
-```
+``` rb
 class User < ActiveRecord::Base
+  include Tunable::Model
 
   main_settings :layout_color => {
     :default => lambda { |user| user.is_admin? ? 'black' : 'blue' }
@@ -107,7 +105,7 @@ Then:
   user.layout_color # => 'black'
 ```
 
-That's pretty much it.
+That's pretty much it. Fork away and send a PR.
 
 Boring stuff
 ------------
