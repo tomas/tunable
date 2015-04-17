@@ -6,7 +6,7 @@ Pluggable settings for your AR models.
 The code
 --------
 
-Let's set up notification settings for our Users.
+Let's set up notification settings for our Users. Rails 4+.
 
 ``` rb
 class User < ActiveRecord::Base
