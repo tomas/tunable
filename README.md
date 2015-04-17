@@ -1,18 +1,14 @@
 Tunable
 =======
 
-Pluggable settings for your AR 4+ models.
+A simple gem that provides scoped, pluggable settings for your AR 4+ models. Let's you keep things simple in your models by moving all customizable settings into a separate table, using a polymorphic Settings model. 
 
 The code
 --------
 
-Let's set up notification settings for our Users. 
-
 ``` rb
 class User < ActiveRecord::Base
   include Tunable::Model
-
-  has_settings :notify => :activity, :new_messages, :weekly_report
 end
 ```
 
@@ -20,16 +16,23 @@ Now we can do:
 
 ``` rb
   user = User.create(:name => 'John Lennon')
-  user.get_setting(:notify, :activity) # => nil
+  user.get_setting(:theme, :layout) # => nil
+  user.get_setting(:theme, :color) # => nil
 
-  user.settings = { notify: { activity: true } }
+  user.settings = { layout: { format: 'wide', color: 'red' } }
   user.save
 
-  user.get_setting(:notify, :activity) # => true
+  user.get_setting(:theme, :layout) # => 'wide'
+  user.get_setting(:theme, :color) # => 'red'
 ```
 
-Tunable also lets you set defaults for your settings. Here's how.
+You can also get a flat hash of your settings by calling the `settings_hash` method.
 
+``` r
+  user.settings_hash # => { :theme => { :layout => 'wide', :color => 'red' } }
+``` rb
+
+Tunable also lets you set defaults for your settings. Let's set up default notification settings for our Users. 
 
 ``` rb
 class User < ActiveRecord::Base
