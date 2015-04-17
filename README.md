@@ -1,12 +1,12 @@
 Tunable
 =======
 
-Pluggable settings for your AR models.
+Pluggable settings for your AR 4+ models.
 
 The code
 --------
 
-Let's set up notification settings for our Users. Rails 4+.
+Let's set up notification settings for our Users. 
 
 ``` rb
 class User < ActiveRecord::Base
