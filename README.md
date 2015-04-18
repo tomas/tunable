@@ -19,7 +19,7 @@ Now we can do:
   user.get_setting(:theme, :layout) # => nil
   user.get_setting(:theme, :color) # => nil
 
-  user.settings = { layout: { format: 'wide', color: 'red' } }
+  user.settings = { theme: { format: 'wide', color: 'red' } }
   user.save
 
   user.get_setting(:theme, :layout) # => 'wide'
@@ -39,9 +39,9 @@ class User < ActiveRecord::Base
   include Tunable::Model
 
   has_settings :notify => {
-    activity:      { default: false },
-    new_messages:  { default: true },
-    weekly_report: { default: true }
+    activity:      false,
+    new_messages:  true,
+    weekly_report: false
   }
 end
 ```
@@ -58,7 +58,7 @@ Now we can do:
   user.get_setting(:notify, :new_messages) # => false
 ```
 
-Tunable also provides a `main_settings` helper that sets up main level settings.
+Tunable also provides a `main_settings` helper that sets up main level settings. These automatically define setters and getters for your model instances.
 
 ``` rb
 class User < ActiveRecord::Base
@@ -70,7 +70,6 @@ end
 ```
 
 Now let's see what happens.
-
 
 ``` rb
   user = User.create(:name => 'Paul MacCartney')
@@ -85,15 +84,15 @@ Now let's see what happens.
   user.language # => 'es'
 ```
 
-You can also set a lambda to return the default setting for a model.
+Beautiful. You can also set a lambda to return the default setting for a model.
 
 
 ``` rb
 class User < ActiveRecord::Base
   include Tunable::Model
 
-  main_settings :layout_color => {
-    :default => lambda { |user| user.is_admin? ? 'black' : 'blue' }
+  main_settings :layout_type => {
+    :default => lambda { |user| user.is_admin? ? 'advanced' : 'simple' }
   }
 
 end
@@ -103,9 +102,9 @@ Then:
 
 ``` rb
   user = User.create(:name => 'Ringo Starr', :admin => false)
-  user.layout_color # => 'blue'
+  user.layout_type # => 'simple'
   user.admin = true
-  user.layout_color # => 'black'
+  user.layout_type # => 'advanced'
 ```
 
 That's pretty much it. Fork away and send a PR, but please add tests for it.
