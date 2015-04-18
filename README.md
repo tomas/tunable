@@ -39,9 +39,9 @@ class User < ActiveRecord::Base
   include Tunable::Model
 
   has_settings :notify => {
-    activity:      false,
-    new_messages:  true,
-    weekly_report: false
+    activity:      { default: false },
+    new_messages:  { default: true },
+    weekly_report: { default: false }
   }
 end
 ```
