@@ -139,7 +139,6 @@ module Tunable
     # instance methods below
 
     def settings=(hash)
-      puts hash.inspect
       Tunable::Setting.store_many(hash, self)
     end
 
@@ -230,7 +229,8 @@ module Tunable
             # main settings, so we need to make sure we normalize here again
             normalized_value = Tunable.normalize_value(value)
 
-            new_settings << [context.to_s, key.to_s, normalized_value, self.id, self.class.model_name.to_s]
+            # class.base_class returns name of parent class for STI models
+            new_settings << [context.to_s, key.to_s, normalized_value, self.id, self.class.base_class.name]
             # remove_instance_variable("@setting_main_#{key}") if context == :main
           end
         end
