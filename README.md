@@ -19,7 +19,7 @@ Now we can do:
   user.get_setting(:theme, :layout) # => nil
   user.get_setting(:theme, :color) # => nil
 
-  user.settings = { theme: { format: 'wide', color: 'red' } }
+  user.settings = { theme: { layout: 'wide', color: 'red' } }
   user.save
 
   user.get_setting(:theme, :layout) # => 'wide'
