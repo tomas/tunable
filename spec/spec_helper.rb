@@ -1,16 +1,18 @@
-require 'rubygems'
-require 'active_support'
+$LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib')
+
+require 'bundler/setup'
 require 'active_record'
+require 'tunable'
 
 ActiveRecord::Base.establish_connection(
-  "adapter" => "sqlite3", "database" => ':memory:'
+  "adapter"  => "sqlite3", 
+  "database" => ':memory:'
 )
 
 ActiveRecord::Base.logger = Logger.new(File.join(File.dirname(__FILE__), "debug.log"))
 
 this_path = File.dirname(__FILE__)
 load File.join(this_path, '/schema.rb')
-require File.join(this_path, '..', 'lib', 'tunable.rb')
 
 class TunableModel < ActiveRecord::Base
   include Tunable::Model
