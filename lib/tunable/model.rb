@@ -86,14 +86,7 @@ module Tunable
           set_default_setting(:main, field, default) unless default.nil?
 
           define_method field do
-            if instance_variable_defined?("@setting_main_#{field}")
-              # the instance var is already normalized to 1/0 when called by the setter
-              Tunable.getter_value(instance_variable_get("@setting_main_#{field}"))
-            else
-              current = main_settings[field.to_sym]
-              default_value = default.is_a?(Proc) ? default.call(self) : default
-              current.nil? ? default_value : current
-            end
+            get_value_for(field)
           end
 
           define_method "#{field}?" do
@@ -111,10 +104,11 @@ module Tunable
             end
 
             value   = Tunable.normalize_value(raw_value)
-            current = Tunable.normalize_value(send("#{field}"))
+            current = Tunable.normalize_value(get_value_for(field, false)) # don't fallback to default
             # debug "Setting #{field} to #{value} (#{value.class}), current: #{current} (#{current.class})"
 
             if value === current
+              # puts 'Value is same as current'
               send('changed_attributes').delete(field) # in case we had set if before
               return
             end
@@ -199,6 +193,22 @@ module Tunable
     end
 
     private
+
+    def get_value_for(field, use_default = true)
+      if instance_variable_defined?("@setting_main_#{field}")
+        # the instance var is already normalized to 1/0 when called by the setter
+        Tunable.getter_value(instance_variable_get("@setting_main_#{field}"))
+      else
+        current = main_settings[field.to_sym]
+        return current if current.present? or !use_default
+        
+        if default = self.class.default_settings(:main)[field.to_sym]
+          return default.is_a?(Proc) ? default.call(self) : default
+        end
+
+        nil
+      end
+    end
 
     def modified_settings
       @modified_settings ||= {}
