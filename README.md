@@ -1,7 +1,7 @@
 Tunable
 =======
 
-A simple gem that provides scoped, pluggable settings for your AR 4+ models. Let's you keep things simple in your models by moving all customizable settings into a separate table, using a polymorphic Settings model. 
+A simple gem that provides scoped, pluggable settings for your AR 4+ models. Lets you keep things simple in your models by moving all customizable settings into a separate table, using a polymorphic Settings model. 
 
 The code
 --------
