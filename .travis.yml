@@ -1,0 +1,10 @@
+language: ruby
+rvm:
+  - 2.2
+  - 2.1
+bundler_args: --no-deployment
+script: 
+  bundle exec appraisal rspec
+gemfile:
+  - gemfiles/rails_4.gemfile
+  - gemfiles/rails_42.gemfile
