@@ -6,7 +6,7 @@ PATH
       activesupport (>= 4.0.0)
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     activemodel (4.2.1)
       activesupport (= 4.2.1)
@@ -66,6 +66,7 @@ DEPENDENCIES
   activesupport (= 4.2.1)
   appraisal
   bundler (~> 1.0, >= 1.0.0)
+  json (~> 1.8.3)
   pry
   rspec (~> 3.0, >= 3.0.0)
   sqlite3 (~> 1.0, >= 1.0.0)
