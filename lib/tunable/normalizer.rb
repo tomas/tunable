@@ -8,6 +8,7 @@ module Tunable
     def normalize_value(val)
       return 1 if TRUTHIES.include?(val.to_s)
       return 0 if FALSIES.include?(val.to_s)
+      return Integer(val) if is_integer?(val)
       return if val.blank? # false.blank? returns true so this needs to go after the 0 line
       val
     end
@@ -27,6 +28,15 @@ module Tunable
       else
         a.class == b.class
       end
+    end
+
+    private
+
+    def is_integer?(val)
+      Integer(val)
+      true
+    rescue
+      false
     end
 
   end

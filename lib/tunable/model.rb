@@ -201,7 +201,7 @@ module Tunable
       else
         current = main_settings[field.to_sym]
         return current if current.present? or !use_default
-        
+
         if default = self.class.default_settings(:main)[field.to_sym]
           return default.is_a?(Proc) ? default.call(self) : default
         end

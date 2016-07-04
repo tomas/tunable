@@ -18,7 +18,7 @@ describe 'normalization' do
     :numbers => {
       :number_0 => '0',
       :number_1 => '1',
-      :number_of_the_beast => '666'
+      :number_of_the_beast => 666
     },
     :onoffs => {
       :on  => 'on',
@@ -57,7 +57,7 @@ describe 'normalization' do
       sql = "select `value` from `settings` where `settable_id` = #{id} and `context` = '#{context}' and `key` = '#{key}';"
       res = ActiveRecord::Base.connection.execute(sql)
       # puts res.inspect
-      res[0]['value']
+      res[0] ? res[0]['value'] : nil
     end
 
     describe 'creating a new setting directly' do
@@ -188,10 +188,7 @@ describe 'normalization' do
     describe 'using settings relationship' do
 
       before :all do
-
-        @model.update_attributes({
-          :settings => VALUE_TYPES
-        })
+        @model.update_attributes(:settings => VALUE_TYPES)
       end
 
       after :all do
@@ -292,7 +289,7 @@ describe 'normalization' do
     end
 
     it 'keeps 666 as 666' do
-      get_value_from_model(:numbers, :number_of_the_beast).should == '666'
+      get_value_from_model(:numbers, :number_of_the_beast).should == 666
     end
 
     it 'keeps foo as foo' do

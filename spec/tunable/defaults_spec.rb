@@ -100,7 +100,7 @@ describe 'defaults' do
 
           TEST_SETTINGS.each do |key, val|
             it "#{key} equals new val" do
-              @foo.main_settings[key].should == @new_settings[key]
+              @foo.main_settings[key].should === @new_settings[key]
             end
           end
 
@@ -110,7 +110,7 @@ describe 'defaults' do
 
           TEST_SETTINGS.each do |key, val|
             it "#{key} equals new val" do
-              @foo.get_main_setting(key).should == @new_settings[key]
+              @foo.get_main_setting(key).should === @new_settings[key]
             end
           end
         end
