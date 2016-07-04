@@ -14,8 +14,8 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = ">= 1.3.6"
   # s.rubyforge_project         = "tunable"
 
-  s.add_runtime_dependency "activerecord", "~> 4.0.0"
-  s.add_runtime_dependency "activesupport", "~> 4.0.0"
+  s.add_runtime_dependency "activerecord", ">= 4.0.0"
+  s.add_runtime_dependency "activesupport", ">= 4.0.0"
 
   s.add_development_dependency "bundler", '~> 1.0', '>= 1.0.0'
   s.add_development_dependency "rspec", '~> 3.0', '>= 3.0.0'

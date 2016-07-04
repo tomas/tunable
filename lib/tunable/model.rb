@@ -109,7 +109,7 @@ module Tunable
 
             if value === current
               # puts 'Value is same as current'
-              send('changed_attributes').delete(field) # in case we had set if before
+              @changed_attributes.delete(field) # in case we had set if before
               return
             end
 
@@ -180,14 +180,14 @@ module Tunable
 
     def queue_setting_for_update(context, key, val)
       if self.class.main_settings_list.include?(key.to_sym)
-        send('changed_attributes')[key.to_sym] = val
+        @changed_attributes[key.to_sym] = val if changed_attributes.include?(key.to_sym)
       end
       (modified_settings[context.to_sym] ||= {})[key.to_sym] = val
     end
 
     def queue_setting_for_deletion(context, key)
       if self.class.main_settings_list.include?(key)
-        send('changed_attributes')[key.to_sym] = nil
+        @changed_attributes[key.to_sym] = nil if changed_attributes.include?(key.to_sym)
       end
       (deleted_settings[context.to_sym] ||= []) << key.to_sym
     end
