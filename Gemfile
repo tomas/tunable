@@ -1,4 +1,4 @@
 source :rubygems
 
-# specified in tuktuk.gemspec
+# specified in gemspec
 gemspec

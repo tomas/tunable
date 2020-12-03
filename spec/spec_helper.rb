@@ -5,7 +5,7 @@ require 'active_record'
 require 'tunable'
 
 ActiveRecord::Base.establish_connection(
-  "adapter"  => "sqlite3", 
+  "adapter"  => "sqlite3",
   "database" => ':memory:'
 )
 
