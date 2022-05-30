@@ -153,6 +153,15 @@ module Tunable
       self.class.default_settings(context)[key.to_sym]
     end
 
+    def set_setting(context, key, val)
+      obj = { context => { key => val } }
+      self.settings = obj
+    end
+
+    def remove_setting(context, key)
+      set_setting(context, key, nil)
+    end
+
     def get_main_setting(key)
       get_setting(:main, key)
     end
