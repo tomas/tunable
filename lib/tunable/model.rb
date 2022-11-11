@@ -57,6 +57,17 @@ module Tunable
               default = opts
             end
 
+            getter = "#{name}_#{field}"
+
+            define_method getter do
+              get_setting(name, field)
+            end
+
+            define_method "#{getter}=" do |value|
+              # self.settings = { name => { field => val } }
+              set_setting(name, field, value)
+            end
+
             set_default_setting(name, field, default) unless default.nil?
           end
         end
