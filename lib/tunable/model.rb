@@ -120,7 +120,7 @@ module Tunable
 
             if value === current
               # puts 'Value is same as current'
-              @changed_attributes.delete(field) # in case we had set if before
+              changed_attributes.delete(field) # in case we had set if before
               return
             end
 
@@ -200,14 +200,14 @@ module Tunable
 
     def queue_setting_for_update(context, key, val)
       if self.class.main_settings_list.include?(key.to_sym)
-        @changed_attributes[key.to_sym] = val if changed_attributes.include?(key.to_sym)
+        changed_attributes[key.to_sym] = val if changed_attributes.include?(key.to_sym)
       end
       (modified_settings[context.to_sym] ||= {})[key.to_sym] = val
     end
 
     def queue_setting_for_deletion(context, key)
       if self.class.main_settings_list.include?(key)
-        @changed_attributes[key.to_sym] = nil if changed_attributes.include?(key.to_sym)
+        changed_attributes[key.to_sym] = nil if changed_attributes.include?(key.to_sym)
       end
       (deleted_settings[context.to_sym] ||= []) << key.to_sym
     end
@@ -239,12 +239,12 @@ module Tunable
     end
 
     def delete_setting(context, key)
-      Tunable::Setting.delete_all(
-        :context       => context.to_s,
-        :key           => key.to_s,
-        :settable_type => self.class.model_name.to_s,
-        :settable_id   => self.id
-      )
+      Tunable::Setting.where(
+        context: context.to_s,
+        key: key.to_s,
+        settable_type: self.class.model_name.to_s,
+        settable_id: self.id
+      ).delete_all
     end
 
     def save_new_settings

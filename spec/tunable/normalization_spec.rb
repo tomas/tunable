@@ -188,7 +188,7 @@ describe 'normalization' do
     describe 'using settings relationship' do
 
       before :all do
-        @model.update_attributes(:settings => VALUE_TYPES)
+        @model.update(:settings => VALUE_TYPES)
       end
 
       after :all do

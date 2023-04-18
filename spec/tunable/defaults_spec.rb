@@ -93,7 +93,7 @@ describe 'defaults' do
           }
 
           @foo = TunableModel.new
-          @foo.update_attributes(@new_settings)
+          @foo.update(@new_settings)
         end
 
         describe 'settings_hash' do
