@@ -30,6 +30,8 @@ module Tunable
           row_sql = "#{sql}(#{vals})"
           connection.execute(row_sql)
         end
+      # elsif ActiveRecord::Base.connection.adapter_name.downcase == 'postgres'
+        # TODO
       else
         sql += "(#{values_array.join('),(')})"
         connection.execute(sql)
