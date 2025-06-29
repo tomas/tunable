@@ -11,8 +11,10 @@ describe 'basic setters' do
 
     it 'stores new setting, without saving' do
       @model.set_setting(:foo, :bar, 123)
-      expect(@model.get_setting(:foo, :bar)).to eq(nil)
-      expect(@model.settings_hash[:foo]).to eq(nil)
+      # expect(@model.get_setting(:foo, :bar)).to eq(nil)
+      # expect(@model.settings_hash[:foo]).to eq(nil)
+      expect(@model.get_setting(:foo, :bar)).to eq(123)
+      expect(@model.settings_hash[:foo]).to eq({ bar: 123 })
       @model.save
       @model.reload
       expect(@model.get_setting(:foo, :bar)).to eq(123)

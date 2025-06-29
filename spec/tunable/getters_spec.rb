@@ -12,13 +12,13 @@ describe 'basic setters' do
   end
 
 
-  it 'has getters setters scoped by context' do
+  it 'has getters scoped by context' do
     expect(@model.respond_to?(:website_super_mode)).to eq(true)
     expect(@model.respond_to?(:website_super_mode=)).to eq(true)
 
     expect(@model.website_super_mode).to eq(false)
     expect(@model.website_super_mode = true).to eq(true)
-    expect(@model.website_super_mode).to eq(false)
+    expect(@model.website_super_mode).to eq(true)
     @model.save
     expect(@model.website_super_mode).to eq(true)
   end

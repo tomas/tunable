@@ -148,11 +148,19 @@ module Tunable
     end
 
     def settings_hash
-      if modified_settings.any?
-        puts "Settings have been changed. Hash will be incomplete."
-      end
 
       @object_hashed_settings ||= Hasher.flatten(settings.reload, :context, :key)
+
+      if modified_settings.any?
+        modified_settings.each do |context, values|
+          values.each do |key, value|
+            @object_hashed_settings[context.to_sym] ||= {}
+            @object_hashed_settings[context.to_sym][key.to_sym] = value
+          end
+        end
+      end
+
+      @object_hashed_settings
     end
 
     def get_setting(context, key)
