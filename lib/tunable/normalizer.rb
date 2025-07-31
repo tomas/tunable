@@ -2,8 +2,8 @@ module Tunable
 
   module Normalizer
 
-    TRUTHIES = ['true', 't', 'on', 'yes', 'y', '1'].freeze
-    FALSIES  = ['false', 'f', 'off', 'no', 'n', '0'].freeze
+    TRUTHIES = ['true', 't', 'on', 'yes', 'y'].freeze
+    FALSIES  = ['false', 'f', 'off', 'no', 'n'].freeze
 
     def normalize_value(val)
       return 1 if TRUTHIES.include?(val.to_s)
