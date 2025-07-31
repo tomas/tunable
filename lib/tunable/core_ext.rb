@@ -12,14 +12,12 @@ module Tunable
       columns_array = columns.map { |column| connection.quote_column_name(column) }
 
       values_array = values.map do |arr|
-        row_values = []
-        arr.each_with_index do |val, i|
-          row_values << connection.quote(val)
-        end
-        row_values.join(',')
+        arr.map do |val, i|
+          val == true ? '"true"' : val == false ? '"false"' : connection.quote(val)
+        end.join(',')
       end
 
-      values_array = values_array.map{ |str| str.gsub(EmojiFix::REGEX, " ") }
+      values_array = values_array.map { |str| str.gsub(EmojiFix::REGEX, " ") }
       insert_method = options[:method] || 'INSERT'
       sql = "#{insert_method} INTO `#{self.table_name}` (#{columns_array.join(',')}) VALUES "
 

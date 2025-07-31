@@ -114,7 +114,7 @@ module Tunable
               raise "Invalid value: #{raw_value}. Expected #{default.class}, got #{raw_value.class}"
             end
 
-            value   = Tunable.normalize_value(raw_value)
+            value   = Tunable.normalize_value(raw_value, default.class)
             current = Tunable.normalize_value(get_value_for(field, false)) # don't fallback to default
             # debug "Setting #{field} to #{value} (#{value.class}), current: #{current} (#{current.class})"
 
@@ -148,7 +148,6 @@ module Tunable
     end
 
     def settings_hash
-
       @object_hashed_settings ||= Hasher.flatten(settings.reload, :context, :key)
 
       if modified_settings.any?
@@ -167,7 +166,9 @@ module Tunable
       val = settings_context(context)[key]
 
       # if value is nil or no default is set, stop here
-      return val if !val.nil? or self.class.default_settings(context)[key.to_sym].nil?
+      if !val.nil? or self.class.default_settings(context)[key.to_sym].nil?
+        return val
+      end
 
       self.class.default_settings(context)[key.to_sym]
     end
@@ -224,8 +225,8 @@ module Tunable
 
     def get_value_for(field, use_default = true)
       if instance_variable_defined?("@setting_main_#{field}")
-        # the instance var is already normalized to 1/0 when called by the setter
-        Tunable.getter_value(instance_variable_get("@setting_main_#{field}"))
+        # the instance var is already normalized when called by the setter
+        instance_variable_get("@setting_main_#{field}")
       else
         current = main_settings[field.to_sym]
         return current if current.present? or !use_default

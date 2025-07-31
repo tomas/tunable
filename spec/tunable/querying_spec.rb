@@ -125,8 +125,8 @@ describe 'setting on/off?' do
       end
 
       describe '1' do
-        it 'returns true' do
-          @model.setting_on?(:numbers, :number_1).should === true
+        it 'returns false' do
+          @model.setting_on?(:numbers, :number_1).should === false
         end
       end
 
@@ -195,8 +195,8 @@ describe 'setting on/off?' do
       end
 
       describe '0' do
-        it 'returns true' do
-          @model.setting_off?(:numbers, :number_0).should === true
+        it 'returns false' do
+          @model.setting_off?(:numbers, :number_0).should === false
         end
       end
 
