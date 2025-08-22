@@ -264,9 +264,11 @@ module Tunable
 
         modified_settings.each do |context, fields|
           fields.each do |key, value|
+
             # even though we do normalize on the setters, not all settings are
             # main settings, so we need to make sure we normalize here again
-            normalized_value = Tunable.normalize_value(value)
+            default = self.class.default_settings(context)[key.to_sym]
+            normalized_value = Tunable.normalize_value(value, default.nil? ? nil : default.class)
 
             # class.base_class returns name of parent class for STI models
             new_settings << [context.to_s, key.to_s, normalized_value, self.id, self.class.base_class.name]

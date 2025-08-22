@@ -6,10 +6,10 @@ module Tunable
     FALSIES  = ['false', 'f', 'off', 'no', 'n'].freeze
 
     def normalize_value(val, type = nil)
-      # if [TrueClass, FalseClass].include?(type)
-      #   return false if val.to_s == '0'
-      #   return true if val.to_s == '1'
-      # end
+      if type && [TrueClass, FalseClass].include?(type)
+        return false if val.to_s == '0'
+        return true if val.to_s == '1'
+      end
 
       return true if TRUTHIES.include?(val.to_s)
       return false if FALSIES.include?(val.to_s)
