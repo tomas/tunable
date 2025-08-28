@@ -26,7 +26,7 @@ module Tunable
 
       hash.each do |context, fields|
         fields.each do |key, val|
-          if val.blank? && !object.settings_context(context.to_sym)[key.to_sym].nil?
+          if (val.nil? || val == '') && !object.settings_context(context.to_sym)[key.to_sym].nil?
 
             # setting was present and now deleted
             object.queue_setting_for_deletion(context, key)
