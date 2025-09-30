@@ -10,6 +10,7 @@ ActiveRecord::Base.establish_connection(
 )
 
 ActiveRecord::Base.logger = Logger.new(File.join(File.dirname(__FILE__), "debug.log"))
+# ActiveRecord::Base.logger = Logger.new(STDOUT)
 
 this_path = File.dirname(__FILE__)
 load File.join(this_path, '/schema.rb')

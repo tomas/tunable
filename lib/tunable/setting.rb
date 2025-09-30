@@ -51,7 +51,7 @@ module Tunable
     end
 
     def value=(val)
-      self[:value] = Tunable.normalize_value(val)
+      self[:value] = Tunable.normalize_value(val).to_s
     end
 
   end
