@@ -45,4 +45,29 @@ describe Tunable::Setting do
 
   end
 
+  describe '.import SQL quoting' do
+    it 'wraps boolean true/false in single quotes, not double quotes' do
+      columns = [:context, :key, :value, :settable_id, :settable_type]
+      values = [
+        ['test', 'bool_true', true, 1, 'TunableModel'],
+        ['test', 'bool_false', false, 1, 'TunableModel'],
+      ]
+
+      sqls = []
+      expect(ActiveRecord::Base.connection).to receive(:execute).twice do |sql|
+        sqls << sql
+      end
+
+      Tunable::Setting.import(columns, values, method: 'REPLACE')
+
+      sqls.each do |sql|
+        expect(sql).not_to include('"true"')
+        expect(sql).not_to include('"false"')
+      end
+
+      expect(sqls.any? { |s| s.include?("'true'") }).to be true
+      expect(sqls.any? { |s| s.include?("'false'") }).to be true
+    end
+  end
+
 end

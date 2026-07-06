@@ -13,7 +13,7 @@ module Tunable
 
       values_array = values.map do |arr|
         arr.map do |val, i|
-          val == true ? '"true"' : val == false ? '"false"' : connection.quote(val)
+          val == true ? "'true'" : val == false ? "'false'" : connection.quote(val)
         end.join(',')
       end
 
